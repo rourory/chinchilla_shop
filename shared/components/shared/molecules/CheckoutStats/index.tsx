@@ -7,10 +7,17 @@ import { ArrowRight, Package, Percent, Truck } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { useCart } from "@/shared/hooks/use-cart";
 import { Skeleton } from "@/shared/components/ui/skeleton";
+import { Controller, useFormContext } from "react-hook-form";
+import { Input } from "@/shared/components/ui/input";
 
-const CheckoutStats = () => {
+interface CheckoutStatsProps {
+  className?: string;
+  submitting: boolean;
+}
+
+const CheckoutStats: React.FC<CheckoutStatsProps> = ({ submitting }) => {
+  const { control } = useFormContext();
   const { totalAmount } = useCart();
-  console.log(totalAmount);
   const deliveryPrice = 20;
 
   const taxes = React.useMemo(() => {
@@ -48,8 +55,13 @@ const CheckoutStats = () => {
         title="Delivery:"
         value={deliveryPrice}
       />
-
+      <Controller
+        control={control}
+        name="totalAmount"
+        render={() => <Input hidden value={totalAmountWithTaxesAndDelivery} />}
+      />
       <Button
+        loading={submitting}
         type="submit"
         disabled={!totalAmount}
         className="w-full h-14 rounded-2xl mt-6 text-base font-bold"

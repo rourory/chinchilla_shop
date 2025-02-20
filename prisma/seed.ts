@@ -14,6 +14,7 @@ async function up() {
         password: hashSync("12345", 10),
         role: "USER",
         verified: new Date(),
+        phone: "+375445552233",
       },
       {
         fullName: "User Two",
@@ -21,6 +22,7 @@ async function up() {
         password: hashSync("12345", 10),
         role: "USER",
         verified: new Date(),
+        phone: "+375445552233",
       },
       {
         fullName: "Admin",
@@ -28,6 +30,7 @@ async function up() {
         password: hashSync("54321", 10),
         role: "ADMIN",
         verified: new Date(),
+        phone: "+375445552233",
       },
     ],
   });

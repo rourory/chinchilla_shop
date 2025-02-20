@@ -5,6 +5,7 @@ import Title from "@/shared/components/shared/atoms/Title";
 import TopBar from "@/shared/components/shared/organisms/TopBar";
 import { Suspense } from "react";
 import { findProducts, SearchParams } from "@/shared/lib/findProducts";
+import PayConfirmator from "@/shared/components/shared/atoms/PayConfirmator";
 
 export default async function Home({
   searchParams,
@@ -14,6 +15,7 @@ export default async function Home({
   const categories = await findProducts(searchParams);
   return (
     <>
+      <PayConfirmator searchParams={searchParams} />
       <Container className="mt-10">
         <Title text="Our products" size="lg" className="font-medium" />
       </Container>

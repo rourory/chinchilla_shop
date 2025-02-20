@@ -6,7 +6,6 @@ import {
 } from "@prisma/client";
 import { create } from "zustand";
 import { ApiClients } from "../services/api-clients";
-import { CartItemInfoProps } from "../components/shared/molecules/CartDrawerItem";
 import { CartItemCreateDTO } from "@/app/api/user_cart/route";
 
 export type ICartItem = CartItem & {

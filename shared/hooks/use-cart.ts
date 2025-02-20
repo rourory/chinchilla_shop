@@ -32,6 +32,18 @@ export const useCart = () => {
     [cartItems],
   );
 
+  const deliveryPrice = 20;
+
+  const taxes = React.useMemo(() => {
+    if (totalAmount) return Math.round((totalAmount / 100) * 5);
+    return 0;
+  }, [totalAmount]);
+
+  const totalAmountWithTaxesAndDelivery = React.useMemo(() => {
+    if (totalAmount && taxes) return totalAmount + taxes + deliveryPrice;
+    return taxes + deliveryPrice;
+  }, [taxes]);
+
   return {
     cartItems,
     fetchCartItems,
@@ -41,5 +53,8 @@ export const useCart = () => {
     onUpdateQuantity,
     totalAmount,
     totalQuantity,
+    deliveryPrice,
+    taxes,
+    totalAmountWithTaxesAndDelivery,
   };
 };

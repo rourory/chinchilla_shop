@@ -7,8 +7,7 @@ import { ArrowRight, Package, Percent, Truck } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { useCart } from "@/shared/hooks/use-cart";
 import { Skeleton } from "@/shared/components/ui/skeleton";
-import { Controller, useFormContext } from "react-hook-form";
-import { Input } from "@/shared/components/ui/input";
+import { FormInput } from "@/shared/components/form/form-input";
 
 interface CheckoutStatsProps {
   className?: string;
@@ -16,16 +15,7 @@ interface CheckoutStatsProps {
 }
 
 const CheckoutStats: React.FC<CheckoutStatsProps> = ({ submitting }) => {
-  const { control } = useFormContext();
-  const { totalAmount } = useCart();
-  const deliveryPrice = 20;
-
-  const taxes = React.useMemo(() => {
-    if (totalAmount) return Math.round((totalAmount / 100) * 5);
-  }, [totalAmount]);
-  const totalAmountWithTaxesAndDelivery = React.useMemo(() => {
-    if (totalAmount && taxes) return totalAmount + taxes + deliveryPrice;
-  }, [taxes]);
+  const { totalAmount, totalAmountWithTaxesAndDelivery, deliveryPrice, taxes } = useCart();
 
   return (
     <WhiteBlock className="p-6 sticky top-4">
@@ -54,11 +44,6 @@ const CheckoutStats: React.FC<CheckoutStatsProps> = ({ submitting }) => {
         icon={<Truck size={18} className="text-gray-400" />}
         title="Delivery:"
         value={deliveryPrice}
-      />
-      <Controller
-        control={control}
-        name="totalAmount"
-        render={() => <Input hidden value={totalAmountWithTaxesAndDelivery} />}
       />
       <Button
         loading={submitting}

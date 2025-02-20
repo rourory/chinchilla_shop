@@ -3,4 +3,5 @@ export enum ApiRoutes {
   EXTRA_OPTIONS = "extra-options",
   USER_CART = "user_cart",
   CART_ITEMS = "cart_items",
+  CHECKOUT_CALLBACK = "checkout/callback",
 }

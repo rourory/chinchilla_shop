@@ -13,6 +13,7 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   required?: boolean;
   className?: string;
+  showClearButton?: boolean;
 }
 
 export const FormInput: React.FC<FormInputProps> = ({
@@ -20,6 +21,7 @@ export const FormInput: React.FC<FormInputProps> = ({
   label,
   required,
   className,
+  showClearButton = true,
   ...props
 }) => {
   const {
@@ -42,10 +44,8 @@ export const FormInput: React.FC<FormInputProps> = ({
 
       <div className="relative">
         <Input className="h-12 text-md" {...register(name)} {...props} />
-        {value && (
-          <ClearButton
-            onClick={() => setValue(name, "")}
-          />
+        {showClearButton && value && (
+          <ClearButton onClick={() => setValue(name, "")} />
         )}
       </div>
 

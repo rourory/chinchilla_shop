@@ -17,7 +17,4 @@ export const checkoutFormSchema = z.object({
     .string()
     .min(5, { message: "Address must be at least 5 characters" }),
   comment: z.string().optional(),
-  totalAmount: z
-    .number()
-    .min(0, { message: "Total amount must be at least 0" }),
 });

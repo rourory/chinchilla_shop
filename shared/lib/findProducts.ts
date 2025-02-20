@@ -2,7 +2,12 @@ import { prisma } from "@/prisma/prisma-clent";
 import { Category, Product, ProductVariation } from "@prisma/client";
 import { WithExtraOptions } from "../components/shared/organisms/ChooseProductModal";
 
-export interface SearchParams {
+interface PayResultDetails {
+  payResult?: string;
+  orderId?: string;
+}
+
+export interface SearchParams extends PayResultDetails {
   query?: string;
   sortBy?: string;
   extraOptions?: string;

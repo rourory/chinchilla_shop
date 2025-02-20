@@ -15,35 +15,44 @@ import {
 } from "@/shared/components/form/schemas/checkout-form-schema";
 import { createOrder } from "@/app/actions";
 import toast from "react-hot-toast";
-const CheckoutForm = () => {
+import { useCart } from "@/shared/hooks/use-cart";
+import { User } from "@prisma/client";
+
+interface CheckoutFormProps {
+  user: User | null;
+}
+
+const CheckoutForm: React.FC<CheckoutFormProps> = (props) => {
   const [submitting, setSubmitting] = React.useState(false);
+
+  const { totalAmountWithTaxesAndDelivery } = useCart();
 
   const form = useForm<CheckoutFormSchemaType>({
     resolver: zodResolver(checkoutFormSchema),
     defaultValues: {
-      email: "",
+      email: props.user?.email,
       firstName: "",
       lastName: "",
-      phone: "",
+      phone: props.user?.phone,
       address: "",
       comment: "",
-      totalAmount: 0,
     },
   });
 
   const onSubmit: SubmitHandler<CheckoutFormSchemaType> = async (data, ev) => {
     try {
       setSubmitting(true);
-      const url = await createOrder(data);
-
-      toast.success("Order created successfully. Moving on to payment...", {
-        icon: "🎉",
-      });
+      const url = await createOrder(data, totalAmountWithTaxesAndDelivery);
 
       if (url) {
+        toast.success("Order created successfully. Moving on to payment...", {
+          icon: "🎉",
+        });
         setTimeout(() => {
           location.href = url;
-        }, 2500);
+        }, 1500);
+      } else {
+        throw new Error("Failed to create an order");
       }
     } catch (err) {
       console.log(err);
